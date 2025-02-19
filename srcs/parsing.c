@@ -15,6 +15,8 @@
 #include "utils.h"
 #include <stdlib.h>
 #include <pthread.h>
+#include <errno.h>
+#include <stdio.h>
 
 
 static int	init_forks(t_monitor *data);
@@ -55,9 +57,8 @@ static int	init_forks(t_monitor *data)
 	t_fork	*forks;
 
 	forks = malloc(sizeof(t_fork) * data->nb_philos);
-	if (!data->forks)
+	if (!forks)
 		return (-1);
-	i = 0;
 	while (i < data->nb_philos)
 	{
 		forks[i].nb = i;
