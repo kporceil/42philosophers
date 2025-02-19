@@ -56,6 +56,7 @@ static int	init_forks(t_monitor *data)
 	size_t	i;
 	t_fork	*forks;
 
+	i = 0;
 	forks = malloc(sizeof(t_fork) * data->nb_philos);
 	if (!forks)
 		return (-1);
