@@ -1,0 +1,42 @@
+[
+ {
+  "directory": "/home/kporceil/Documents/Projects/philosopher",
+  "arguments": [
+   "cc",
+   "-Wall",
+   "-Wextra",
+   "-Werror",
+   "-Iincludes",
+   "-MD",
+   "-MP",
+   "-MF",
+   ".build/deps/main.d",
+   "-c",
+   "srcs/main.c",
+   "-o",
+   ".build/objs/main.o",
+   "-g3"
+  ],
+  "file": "srcs/main.c"
+ },
+ {
+  "directory": "/home/kporceil/Documents/Projects/philosopher",
+  "arguments": [
+   "cc",
+   "-Wall",
+   "-Wextra",
+   "-Werror",
+   "-Iincludes",
+   "-MD",
+   "-MP",
+   "-MF",
+   ".build/deps/parsing.d",
+   "-c",
+   "srcs/parsing.c",
+   "-o",
+   ".build/objs/parsing.o",
+   "-g3"
+  ],
+  "file": "srcs/parsing.c"
+ }
+]
