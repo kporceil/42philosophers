@@ -15,7 +15,9 @@
 
 # include <sys/types.h>
 
-int	free_ret(void *ptr, int ret);
-int	ft_atoul(const char *nptr, size_t *nb);
+int		free_ret(void *ptr, int ret);
+size_t	ts(size_t epoch);
+int		ft_atoul(const char *nptr, size_t *nb);
+size_t	ft_gettimeofday(void);
 
 #endif

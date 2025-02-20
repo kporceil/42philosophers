@@ -48,5 +48,7 @@ int	main(int argc, char **argv)
 	}
 	if (init_args(argc, argv, &data) != 0)
 		return (2);
+	if (starting_threads(&data) != 0)
+		return (3);
 	print_args(&data);
 }

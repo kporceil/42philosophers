@@ -42,6 +42,7 @@ typedef struct	s_philo
 	t_fork			*r_fork;
 	t_fork			*l_fork;
 	size_t			last_meal;
+	size_t			*start_time;
 	pthread_mutex_t	eat_mutex;
 	pthread_mutex_t	*loop_mutex;
 	bool			*loop;

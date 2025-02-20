@@ -15,7 +15,6 @@
 #include "utils.h"
 #include <stdlib.h>
 #include <pthread.h>
-#include <errno.h>
 #include <stdio.h>
 
 
@@ -92,6 +91,7 @@ static int	init_philos(t_monitor *data)
 			data->philos[i].r_fork = data->forks + (data->nb_philos - 1);
 		data->philos[i].loop = &data->loop;
 		data->philos[i].loop_mutex = &data->loop_mutex;
+		data->philos[i].start_time = &data->start_time;
 		if (pthread_mutex_init(&data->philos[i].eat_mutex, NULL) != 0)
 			return (free_ret(data->philos, -1));
 		++i;
