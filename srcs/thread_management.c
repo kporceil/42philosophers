@@ -17,7 +17,7 @@
 #include <pthread.h>
 
 void	philo_routine(t_philo *philo);
-void	philo_eat(t_philo *philo);
+int	philo_eat(t_philo *philo);
 
 int	starting_threads(t_monitor *data)
 {
@@ -40,46 +40,56 @@ int	starting_threads(t_monitor *data)
 
 void	philo_routine(t_philo *philo)
 {
+	pthread_mutex_lock(philo->loop_mutex);
 	if (philo->nb % 2)
 		usleep(philo->args.time_eat >> 1);
-	pthread_mutex_lock(philo->loop_mutex);
 	while (*philo->loop)
 	{
 		pthread_mutex_unlock(philo->loop_mutex);
-		philo_eat(philo);
-		printf("%zu %zu is sleeping\n", ts(*philo->start_time), philo->nb);
+		if (philo_eat(philo) != 0)
+			return ;
+		if (secure_print(philo, SLEEP) != 0)
+			return ;
 		usleep(philo->args.time_sleep);
-		printf("%zu %zu is thinking\n", ts(*philo->start_time), philo->nb);
+		if (secure_print(philo, THINK) != 0)
+			return ;
 		pthread_mutex_lock(philo->loop_mutex);
 	}
 	pthread_mutex_unlock(philo->loop_mutex);
 }
 
-void	philo_eat(t_philo *philo)
+void	update_last_meal(t_philo *philo, size_t time)
+{
+	pthread_mutex_lock(&philo->eat_mutex);
+	philo->last_meal = time;
+	pthread_mutex_unlock(&philo->eat_mutex);
+}
+
+int	philo_eat(t_philo *philo)
 {
 	size_t	i;
 	t_fork	*fork;
 
 	i = 0;
+	fork = philo->l_fork;
 	if (philo->nb % 2)
 		fork = philo->r_fork;
-	else
-		fork = philo->l_fork;
 	while (i++ < 2)
 	{
 		pthread_mutex_lock(&fork->mutex);
 		while (fork->available == false)
-		{
-			pthread_mutex_unlock(&fork->mutex);
-			pthread_mutex_lock(&fork->mutex);
-		}
+			pthread_mutex_unlock_lock(&fork->mutex);
 		fork->available = false;
 		pthread_mutex_unlock(&fork->mutex);
-		printf("%zu %zu has taken a fork\n", ts(*philo->start_time), philo->nb);
+		if (secure_print(philo, FORK) != 0)
+			return (-1);
 		fork = philo->r_fork;
 		if (philo->nb % 2)
 			fork = philo->l_fork;
 	}
-	printf("%zu %zu is eating\n", ts(*philo->start_time), philo->nb);
+	if (secure_print(philo, EAT) != 0)
+		return (-1);
+	update_last_meal(philo, ft_gettimeofday());
 	usleep(philo->args.time_eat);
+	return (0);
 }

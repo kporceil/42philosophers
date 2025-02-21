@@ -59,4 +59,12 @@ typedef struct	s_monitor
 	bool			loop;
 }				t_monitor;
 
+typedef enum	e_state
+{
+	EAT,
+	FORK,
+	SLEEP,
+	THINK,
+}				t_state;
+
 #endif

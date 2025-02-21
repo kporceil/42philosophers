@@ -11,9 +11,12 @@
 /* ************************************************************************** */
 
 #include <limits.h>
+#include <pthread.h>
 #include <stdlib.h>
 #include <stdint.h>
 #include <sys/time.h>
+#include <stdio.h>
+#include "philo_data.h"
 #include "utils.h"
 
 static int	ft_isspace(int c)
@@ -64,4 +67,27 @@ size_t	ts(size_t epoch)
 
 	gettimeofday(&tv, NULL);
 	return (epoch - (tv.tv_sec * 1000 + tv.tv_usec / 1000));
+}
+
+int	secure_print(t_philo *philo, t_state mod)
+{
+	pthread_mutex_lock(philo->loop_mutex);
+	if (*philo->loop == false)
+		return (-1);
+	pthread_mutex_unlock(philo->loop_mutex);
+	if (mod == EAT)
+		printf("%zu %zu is eating\n", ts(*philo->start_time), philo->nb);
+	else if (mod == THINK)
+		printf("%zu %zu is thinking\n", ts(*philo->start_time), philo->nb);
+	else if (mod == SLEEP)
+		printf("%zu %zu is sleeping\n", ts(*philo->start_time), philo->nb);
+	else if (mod == FORK)
+		printf("%zu %zu has taken a fork\n", ts(*philo->start_time), philo->nb);
+	return (0);
+}
+
+void	pthread_mutex_unlock_lock(pthread_mutex_t *mtx)
+{
+	pthread_mutex_unlock(mtx);
+	pthread_mutex_lock(mtx);
 }
