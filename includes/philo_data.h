@@ -6,7 +6,7 @@
 /*   By: kporceil <kporceil@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 10:05:35 by kporceil          #+#    #+#             */
-/*   Updated: 2025/02/19 19:25:31 by kporceil         ###   ########lyon.fr   */
+/*   Updated: 2025/02/23 01:18:31 by kporceil         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,13 +36,14 @@ typedef struct	s_args
 
 typedef struct	s_philo
 {
-	pthread_t		*thread;
+	pthread_t		thread;
 	size_t			nb;
 	t_args			args;
 	t_fork			*r_fork;
 	t_fork			*l_fork;
 	size_t			last_meal;
 	size_t			*start_time;
+	size_t			nb_meal;
 	pthread_mutex_t	eat_mutex;
 	pthread_mutex_t	*loop_mutex;
 	bool			*loop;
@@ -65,6 +66,7 @@ typedef enum	e_state
 	FORK,
 	SLEEP,
 	THINK,
+	DIED,
 }				t_state;
 
 #endif

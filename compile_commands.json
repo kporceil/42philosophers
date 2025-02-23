@@ -1,6 +1,6 @@
 [
  {
-  "directory": "/home/kporceil/Documents/Projects/philosopher",
+  "directory": "/home/kenzo/Documents/42/42philosophers",
   "arguments": [
    "cc",
    "-Wall",
@@ -20,7 +20,7 @@
   "file": "srcs/main.c"
  },
  {
-  "directory": "/home/kporceil/Documents/Projects/philosopher",
+  "directory": "/home/kenzo/Documents/42/42philosophers",
   "arguments": [
    "cc",
    "-Wall",
@@ -38,5 +38,65 @@
    "-g3"
   ],
   "file": "srcs/parsing.c"
+ },
+ {
+  "directory": "/home/kenzo/Documents/42/42philosophers",
+  "arguments": [
+   "cc",
+   "-Wall",
+   "-Wextra",
+   "-Werror",
+   "-Iincludes",
+   "-MD",
+   "-MP",
+   "-MF",
+   ".build/deps/utils.d",
+   "-c",
+   "srcs/utils.c",
+   "-o",
+   ".build/objs/utils.o",
+   "-g3"
+  ],
+  "file": "srcs/utils.c"
+ },
+ {
+  "directory": "/home/kenzo/Documents/42/42philosophers",
+  "arguments": [
+   "cc",
+   "-Wall",
+   "-Wextra",
+   "-Werror",
+   "-Iincludes",
+   "-MD",
+   "-MP",
+   "-MF",
+   ".build/deps/thread_management.d",
+   "-c",
+   "srcs/thread_management.c",
+   "-o",
+   ".build/objs/thread_management.o",
+   "-g3"
+  ],
+  "file": "srcs/thread_management.c"
+ },
+ {
+  "directory": "/home/kenzo/Documents/42/42philosophers",
+  "arguments": [
+   "cc",
+   "-Wall",
+   "-Wextra",
+   "-Werror",
+   "-Iincludes",
+   "-MD",
+   "-MP",
+   "-MF",
+   ".build/deps/threads_utils.d",
+   "-c",
+   "srcs/threads_utils.c",
+   "-o",
+   ".build/objs/threads_utils.o",
+   "-g3"
+  ],
+  "file": "srcs/threads_utils.c"
  }
 ]

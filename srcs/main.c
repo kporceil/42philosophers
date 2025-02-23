@@ -6,11 +6,12 @@
 /*   By: kporceil <kporceil@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 10:00:47 by kporceil          #+#    #+#             */
-/*   Updated: 2025/02/19 19:24:46 by kporceil         ###   ########lyon.fr   */
+/*   Updated: 2025/02/23 01:30:30 by kporceil         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdio.h>
+#include "threads.h"
 #include "philo_data.h"
 #include "parsing.h"
 
@@ -48,7 +49,12 @@ int	main(int argc, char **argv)
 	}
 	if (init_args(argc, argv, &data) != 0)
 		return (2);
+	//print_args(&data);
 	if (starting_threads(&data) != 0)
 		return (3);
-	print_args(&data);
+	if (monitor_threads(&data) != 0)
+		return (4);
+	if (end_thread(&data) != 0)
+		return (5);
+	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: kporceil <kporceil@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 13:05:44 by kporceil          #+#    #+#             */
-/*   Updated: 2025/02/19 18:19:36 by kporceil         ###   ########lyon.fr   */
+/*   Updated: 2025/02/23 01:47:49 by kporceil         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 #include <stdint.h>
 #include <sys/time.h>
 #include <stdio.h>
+#include <stdbool.h>
 #include "philo_data.h"
 #include "utils.h"
 
@@ -63,18 +64,23 @@ size_t	ft_gettimeofday(void)
 
 size_t	ts(size_t epoch)
 {
-	struct timeval	tv;
-
-	gettimeofday(&tv, NULL);
-	return (epoch - (tv.tv_sec * 1000 + tv.tv_usec / 1000));
+	return (ft_gettimeofday() - epoch);
 }
 
 int	secure_print(t_philo *philo, t_state mod)
 {
+	bool	loop;
+
 	pthread_mutex_lock(philo->loop_mutex);
-	if (*philo->loop == false)
-		return (-1);
+	loop = *philo->loop;
 	pthread_mutex_unlock(philo->loop_mutex);
+	if (mod == DIED)
+	{
+		printf("%zu %zu died\n", ts(*philo->start_time), philo->nb);
+		return (0);
+	}
+	if (!loop)
+		return (-1);
 	if (mod == EAT)
 		printf("%zu %zu is eating\n", ts(*philo->start_time), philo->nb);
 	else if (mod == THINK)

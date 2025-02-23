@@ -18,7 +18,7 @@ override DEPDIR := $(addprefix $(BUILDDIR), deps/)
 
 override BONUSDEPDIR := $(addprefix bonus/, $(DEPDIR))
 
-BASENAME := main parsing utils
+BASENAME := main parsing utils thread_management threads_utils
 
 BONUSBASENAME := main parsing pipex error_utils fcntl_utils memory_utils \
 				 get_next_line get_next_line_utils heredoc

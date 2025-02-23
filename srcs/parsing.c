@@ -79,6 +79,7 @@ static int	init_philos(t_monitor *data)
 	while (i < data->nb_philos)
 	{
 		data->philos[i].nb = i;
+		data->philos[i].nb_meal = 0;
 		data->philos[i].args.time_die = data->args.time_die;
 		data->philos[i].args.time_eat = data->args.time_eat;
 		data->philos[i].args.time_sleep = data->args.time_sleep;
