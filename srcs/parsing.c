@@ -95,6 +95,8 @@ static int	init_philos(t_monitor *data)
 		data->philos[i].start_time = &data->start_time;
 		if (pthread_mutex_init(&data->philos[i].eat_mutex, NULL) != 0)
 			return (free_ret(data->philos, -1));
+		if (pthread_mutex_init(&data->philos[i].meal_mutex, NULL) != 0)
+			return (free_ret(data->philos, -1));
 		++i;
 	}
 	return (0);

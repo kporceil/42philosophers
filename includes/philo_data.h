@@ -44,6 +44,7 @@ typedef struct	s_philo
 	size_t			last_meal;
 	size_t			*start_time;
 	size_t			nb_meal;
+	pthread_mutex_t	meal_mutex;
 	pthread_mutex_t	eat_mutex;
 	pthread_mutex_t	*loop_mutex;
 	bool			*loop;

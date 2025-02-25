@@ -15,6 +15,8 @@
 #include "utils.h"
 #include <pthread.h>
 
+#include <stdio.h>
+
 int	check_die(t_philo *philo)
 {
 	size_t	last_meal;

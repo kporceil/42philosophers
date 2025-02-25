@@ -73,14 +73,17 @@ int	secure_print(t_philo *philo, t_state mod)
 
 	pthread_mutex_lock(philo->loop_mutex);
 	loop = *philo->loop;
-	pthread_mutex_unlock(philo->loop_mutex);
 	if (mod == DIED)
 	{
 		printf("%zu %zu died\n", ts(*philo->start_time), philo->nb);
+		pthread_mutex_unlock(philo->loop_mutex);
 		return (0);
 	}
 	if (!loop)
+	{
+		pthread_mutex_unlock(philo->loop_mutex);
 		return (-1);
+	}
 	if (mod == EAT)
 		printf("%zu %zu is eating\n", ts(*philo->start_time), philo->nb);
 	else if (mod == THINK)
@@ -89,6 +92,7 @@ int	secure_print(t_philo *philo, t_state mod)
 		printf("%zu %zu is sleeping\n", ts(*philo->start_time), philo->nb);
 	else if (mod == FORK)
 		printf("%zu %zu has taken a fork\n", ts(*philo->start_time), philo->nb);
+	pthread_mutex_unlock(philo->loop_mutex);
 	return (0);
 }
 
