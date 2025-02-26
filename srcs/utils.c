@@ -6,7 +6,7 @@
 /*   By: kporceil <kporceil@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 13:05:44 by kporceil          #+#    #+#             */
-/*   Updated: 2025/02/23 01:47:49 by kporceil         ###   ########lyon.fr   */
+/*   Updated: 2025/02/26 20:20:48 by kporceil         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 #include <sys/time.h>
 #include <stdio.h>
 #include <stdbool.h>
+#include <unistd.h>
 #include "philo_data.h"
 #include "utils.h"
 
@@ -65,39 +66,4 @@ size_t	ft_gettimeofday(void)
 size_t	ts(size_t epoch)
 {
 	return (ft_gettimeofday() - epoch);
-}
-
-int	secure_print(t_philo *philo, t_state mod)
-{
-	bool	loop;
-
-	pthread_mutex_lock(philo->loop_mutex);
-	loop = *philo->loop;
-	if (mod == DIED)
-	{
-		printf("%zu %zu died\n", ts(*philo->start_time), philo->nb);
-		pthread_mutex_unlock(philo->loop_mutex);
-		return (0);
-	}
-	if (!loop)
-	{
-		pthread_mutex_unlock(philo->loop_mutex);
-		return (-1);
-	}
-	if (mod == EAT)
-		printf("%zu %zu is eating\n", ts(*philo->start_time), philo->nb);
-	else if (mod == THINK)
-		printf("%zu %zu is thinking\n", ts(*philo->start_time), philo->nb);
-	else if (mod == SLEEP)
-		printf("%zu %zu is sleeping\n", ts(*philo->start_time), philo->nb);
-	else if (mod == FORK)
-		printf("%zu %zu has taken a fork\n", ts(*philo->start_time), philo->nb);
-	pthread_mutex_unlock(philo->loop_mutex);
-	return (0);
-}
-
-void	pthread_mutex_unlock_lock(pthread_mutex_t *mtx)
-{
-	pthread_mutex_unlock(mtx);
-	pthread_mutex_lock(mtx);
 }

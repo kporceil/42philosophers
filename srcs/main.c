@@ -14,29 +14,7 @@
 #include "threads.h"
 #include "philo_data.h"
 #include "parsing.h"
-
-void	print_args(t_monitor *data)
-{
-	for(size_t i = 0; i < data->nb_philos; ++i)
-	{
-		printf("philo numero : %zu\n", data->philos[i].nb);
-		printf("\ttime to die : %zu\n\ttime to eat : %zu\n\ttime to sleep : %zu\n", data->philos[i].args.time_die, data->philos[i].args.time_eat, data->philos[i].args.time_sleep);
-		printf("\tmeal limit : %s\n", data->philos[i].args.meal_limit ? "true" : "false");
-		if (data->philos[i].args.meal_limit)
-			printf("\t\tmax meal : %zu\n", data->philos[i].args.max_meal);
-		printf("\tr_fork nb : %zu\n", data->philos[i].r_fork->nb);
-		printf("\tl_fork nb : %zu\n", data->philos[i].l_fork->nb);
-		if (&data->loop == data->philos[i].loop)
-			printf("\tloop bool successfull sync\n");
-	 	else
-	 		printf("\tERROR: loop bool\n");
-		if (&data->loop_mutex == data->philos[i].loop_mutex)
-			printf("\tmutex_loop successfully sync\n");
-	 	else
-	 		printf("\tERROR: loop_mutex");
-	}
-	
-}
+#include "utils.h"
 
 int	main(int argc, char **argv)
 {
@@ -49,12 +27,11 @@ int	main(int argc, char **argv)
 	}
 	if (init_args(argc, argv, &data) != 0)
 		return (2);
-	//print_args(&data);
 	if (starting_threads(&data) != 0)
-		return (3);
+		return (free_ret(data.forks, free_ret(data.philos, 3)));
 	if (monitor_threads(&data) != 0)
-		return (4);
+		return (free_ret(data.forks, free_ret(data.philos, 4)));
 	if (end_thread(&data) != 0)
-		return (5);
-	return (0);
+		return (free_ret(data.forks, free_ret(data.philos, 5)));
+	return (free_ret(data.forks, free_ret(data.philos, 0)));
 }

@@ -6,7 +6,7 @@
 /*   By: kporceil <kporceil@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 10:05:35 by kporceil          #+#    #+#             */
-/*   Updated: 2025/02/23 01:18:31 by kporceil         ###   ########lyon.fr   */
+/*   Updated: 2025/02/26 19:34:13 by kporceil         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,14 @@ typedef struct	s_args
 	bool	meal_limit;
 }				t_args;
 
+typedef enum	e_loop
+{
+	WAIT,
+	LOOP,
+	END,
+	ERROR,
+}				t_loop;
+
 typedef struct	s_philo
 {
 	pthread_t		thread;
@@ -41,13 +49,15 @@ typedef struct	s_philo
 	t_args			args;
 	t_fork			*r_fork;
 	t_fork			*l_fork;
+	t_fork			*fork_taken[2];
 	size_t			last_meal;
+	bool			first_meal;
 	size_t			*start_time;
 	size_t			nb_meal;
 	pthread_mutex_t	meal_mutex;
 	pthread_mutex_t	eat_mutex;
 	pthread_mutex_t	*loop_mutex;
-	bool			*loop;
+	t_loop			*loop;
 }				t_philo;
 
 typedef struct	s_monitor
@@ -58,7 +68,7 @@ typedef struct	s_monitor
 	t_philo			*philos;
 	t_fork			*forks;
 	pthread_mutex_t	loop_mutex;
-	bool			loop;
+	t_loop			loop;
 }				t_monitor;
 
 typedef enum	e_state

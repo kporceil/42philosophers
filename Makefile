@@ -18,7 +18,7 @@ override DEPDIR := $(addprefix $(BUILDDIR), deps/)
 
 override BONUSDEPDIR := $(addprefix bonus/, $(DEPDIR))
 
-BASENAME := main parsing utils thread_management threads_utils
+BASENAME := main parsing utils thread_management threads_utils eat_utils
 
 BONUSBASENAME := main parsing pipex error_utils fcntl_utils memory_utils \
 				 get_next_line get_next_line_utils heredoc
@@ -64,10 +64,10 @@ all:
 	@$(MAKE) $(NAME)
 
 $(NAME): $(OBJS)
-	$(CC) $(CLAGS) $(CPPFLAGS) $(OBJS) $(LDLIBS) $(LDFLAGS) -o $(NAME) -g3
+	$(CC) $(CLAGS) $(CPPFLAGS) $(OBJS) $(LDLIBS) $(LDFLAGS) -o $(NAME) -O3
 
 $(OBJDIR)%.o: $(SRCDIR)%.c | $(BUILDDIR) $(OBJDIR) $(DEPDIR)
-	$(CC) $(CFLAGS) $(CPPFLAGS) $(DEPSFLAGS) $(DEPDIR)$*.d -c $< -o $@ -g3
+	$(CC) $(CFLAGS) $(CPPFLAGS) $(DEPSFLAGS) $(DEPDIR)$*.d -c $< -o $@ -O3
 
 $(LIBFT): FORCE
 	@$(MAKE) -C libft/

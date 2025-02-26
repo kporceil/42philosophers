@@ -6,7 +6,7 @@
 /*   By: kporceil <kporceil@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 11:59:43 by kporceil          #+#    #+#             */
-/*   Updated: 2025/02/19 19:25:21 by kporceil         ###   ########lyon.fr   */
+/*   Updated: 2025/02/26 19:31:57 by kporceil         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@
 #include <stdlib.h>
 #include <pthread.h>
 #include <stdio.h>
-
 
 static int	init_forks(t_monitor *data);
 static int	init_philos(t_monitor *data);
@@ -44,9 +43,9 @@ int	init_args(int argc, char **argv, t_monitor *data)
 		return (free_ret(data->forks, -2));
 	if (init_philos(data) != 0)
 		return (free_ret(data->forks, -2));
-	data->loop = false;
+	data->loop = WAIT;
 	if (pthread_mutex_init(&data->loop_mutex, NULL) != 0)
-		return (-2);
+		return (free_ret(data->forks, free_ret(data->philos, -2)));
 	return (0);
 }
 
@@ -80,19 +79,17 @@ static int	init_philos(t_monitor *data)
 	{
 		data->philos[i].nb = i;
 		data->philos[i].nb_meal = 0;
-		data->philos[i].args.time_die = data->args.time_die;
-		data->philos[i].args.time_eat = data->args.time_eat;
-		data->philos[i].args.time_sleep = data->args.time_sleep;
-		data->philos[i].args.meal_limit = data->args.meal_limit;
-		if (data->philos[i].args.meal_limit)
-			data->philos[i].args.max_meal = data->args.max_meal;
+		data->philos[i].args = data->args;
 		data->philos[i].l_fork = data->forks + i;
 		data->philos[i].r_fork = data->forks + (i - 1);
+		data->philos[i].first_meal = false;
 		if (i == 0)
 			data->philos[i].r_fork = data->forks + (data->nb_philos - 1);
 		data->philos[i].loop = &data->loop;
 		data->philos[i].loop_mutex = &data->loop_mutex;
 		data->philos[i].start_time = &data->start_time;
+		data->philos[i].fork_taken[0] = NULL;
+		data->philos[i].fork_taken[1] = NULL;
 		if (pthread_mutex_init(&data->philos[i].eat_mutex, NULL) != 0)
 			return (free_ret(data->philos, -1));
 		if (pthread_mutex_init(&data->philos[i].meal_mutex, NULL) != 0)

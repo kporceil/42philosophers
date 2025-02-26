@@ -6,7 +6,7 @@
 /*   By: kporceil <kporceil@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 14:31:03 by kporceil          #+#    #+#             */
-/*   Updated: 2025/02/19 14:31:53 by kporceil         ###   ########lyon.fr   */
+/*   Updated: 2025/02/26 20:20:54 by kporceil         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,11 @@
 # include "philo_data.h"
 
 int		free_ret(void *ptr, int ret);
+int		free_fork(t_philo *philo, int ret);
+void	update_last_meal(t_philo *philo, size_t time);
+void	take_fork(t_fork *fork);
+bool	check_meal_limit(t_philo *philo);
+void	wait_start(t_philo *philo);
 size_t	ts(size_t epoch);
 int		ft_atoul(const char *nptr, size_t *nb);
 size_t	ft_gettimeofday(void);
