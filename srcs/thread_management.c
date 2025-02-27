@@ -89,6 +89,8 @@ int	philo_eat(t_philo *philo)
 		fork = philo->r_fork;
 		if (philo->nb % 2)
 			fork = philo->l_fork;
+		if (philo->l_fork == philo->r_fork)
+			return (-1);
 	}
 	return (0);
 }
