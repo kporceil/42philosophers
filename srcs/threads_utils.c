@@ -20,7 +20,6 @@
 int	check_die(t_philo *philo)
 {
 
-	pthread_mutex_lock(&philo->eat_mutex);
 	if (philo->first_meal == true)
 	{
 		if (ft_gettimeofday() - philo->last_meal >= philo->args.time_die)
@@ -37,7 +36,6 @@ int	check_die(t_philo *philo)
 			return (-1);
 		}
 	}
-	pthread_mutex_unlock(&philo->eat_mutex);
 	return (0);
 }
 

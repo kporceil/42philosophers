@@ -59,6 +59,7 @@ void	*philo_routine(void *args)
 			return (NULL);
 		if (secure_print(philo, EAT) != 0)
 			return (free_fork(philo, 0), NULL);
+		update_last_meal(philo, ft_gettimeofday());
 		usleep(philo->args.time_eat * 1000);
 		(void)free_fork(philo, 0);
 		if (secure_print(philo, SLEEP) != 0)
@@ -89,10 +90,6 @@ int	philo_eat(t_philo *philo)
 		if (philo->nb % 2)
 			fork = philo->l_fork;
 	}
-	pthread_mutex_lock(&philo->meal_mutex);
-	++philo->nb_meal;
-	pthread_mutex_unlock(&philo->meal_mutex);
-	update_last_meal(philo, ft_gettimeofday());
 	return (0);
 }
 
@@ -107,6 +104,7 @@ int	monitor_threads(t_monitor *data)
 		count = 0;
 		while (i < data->nb_philos)
 		{
+			pthread_mutex_lock(&data->philos[i].eat_mutex);
 			if (check_die(data->philos + i) != 0)
 			{
 				end_loop(data);
@@ -116,6 +114,7 @@ int	monitor_threads(t_monitor *data)
 			if (data->args.meal_limit)
 				if (check_meal_limit(data->philos + i) == true)
 					++count;
+			pthread_mutex_unlock(&data->philos[i].eat_mutex);
 			++i;
 		}
 		if (count >= data->nb_philos)
@@ -129,12 +128,13 @@ int	end_thread(t_monitor *data)
 
 	i = 0;
 	while (i < data->nb_philos)
+		pthread_join(data->philos[i++].thread, NULL);
+	i = 0;
+	while (i < data->nb_philos)
 	{
-		pthread_join(data->philos[i].thread, NULL);
-		pthread_mutex_destroy(&data->philos[i].meal_mutex);
 		pthread_mutex_destroy(&data->philos[i].eat_mutex);
-		pthread_mutex_destroy(&data->forks[i].mutex);
-		++i;
+		pthread_mutex_destroy(&data->forks[i++].mutex);
 	}
+	pthread_mutex_destroy(&data->loop_mutex);
 	return (0);
 }

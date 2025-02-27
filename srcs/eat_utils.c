@@ -36,6 +36,7 @@ int	free_fork(t_philo *philo, int ret)
 void	update_last_meal(t_philo *philo, size_t time)
 {
 	pthread_mutex_lock(&philo->eat_mutex);
+	++philo->nb_meal;
 	philo->last_meal = time;
 	philo->first_meal = true;
 	pthread_mutex_unlock(&philo->eat_mutex);
@@ -52,12 +53,7 @@ void	take_fork(t_fork *fork)
 
 bool	check_meal_limit(t_philo *philo)
 {
-	pthread_mutex_lock(&philo->meal_mutex);
 	if (philo->nb_meal >= philo->args.max_meal)
-	{
-		pthread_mutex_unlock(&philo->meal_mutex);
 		return (true);
-	}
-	pthread_mutex_unlock(&philo->meal_mutex);
 	return (false);
 }

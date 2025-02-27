@@ -92,8 +92,6 @@ static int	init_philos(t_monitor *data)
 		data->philos[i].fork_taken[1] = NULL;
 		if (pthread_mutex_init(&data->philos[i].eat_mutex, NULL) != 0)
 			return (free_ret(data->philos, -1));
-		if (pthread_mutex_init(&data->philos[i].meal_mutex, NULL) != 0)
-			return (free_ret(data->philos, -1));
 		++i;
 	}
 	return (0);
