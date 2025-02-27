@@ -105,10 +105,9 @@ int	monitor_threads(t_monitor *data)
 		while (i < data->nb_philos)
 		{
 			pthread_mutex_lock(&data->philos[i].eat_mutex);
-			if (check_die(data->philos + i) != 0)
+			if (check_die(data->philos + i, data) != 0)
 			{
-				end_loop(data);
-				secure_print(data->philos + i, DIED);
+				pthread_mutex_unlock(&data->philos[i].eat_mutex);
 				return (0);
 			}
 			if (data->args.meal_limit)
@@ -119,6 +118,7 @@ int	monitor_threads(t_monitor *data)
 		}
 		if (count >= data->nb_philos)
 			return (end_loop(data));
+		usleep((data->args.time_die >> 2) * 1000);
 	}
 }
 

@@ -15,6 +15,7 @@
 #include "philo_data.h"
 #include <pthread.h>
 #include <stdbool.h>
+#include <unistd.h>
 
 int	free_fork(t_philo *philo, int ret)
 {
@@ -46,7 +47,11 @@ void	take_fork(t_fork *fork)
 {
 	pthread_mutex_lock(&fork->mutex);
 	while (fork->available == false)
-		pthread_mutex_unlock_lock(&fork->mutex);
+	{
+		pthread_mutex_unlock(&fork->mutex);
+		usleep(750);
+		pthread_mutex_lock(&fork->mutex);
+	}
 	fork->available = false;
 	pthread_mutex_unlock(&fork->mutex);
 }

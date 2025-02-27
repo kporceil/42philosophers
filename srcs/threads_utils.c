@@ -17,14 +17,14 @@
 
 #include <stdio.h>
 
-int	check_die(t_philo *philo)
+int	check_die(t_philo *philo, t_monitor *data)
 {
-
 	if (philo->first_meal == true)
 	{
 		if (ft_gettimeofday() - philo->last_meal >= philo->args.time_die)
 		{
-			pthread_mutex_unlock(&philo->eat_mutex);
+			end_loop(data);
+			secure_print(philo, DIED);
 			return (-1);
 		}
 	}
@@ -32,7 +32,8 @@ int	check_die(t_philo *philo)
 	{
 		if (ft_gettimeofday() - *philo->start_time >= philo->args.time_die)
 		{
-			pthread_mutex_unlock(&philo->eat_mutex);
+			end_loop(data);
+			secure_print(philo, DIED);
 			return (-1);
 		}
 	}

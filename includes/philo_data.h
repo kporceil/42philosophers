@@ -18,14 +18,14 @@
 # include <pthread.h>
 # include <stdbool.h>
 
-typedef struct	s_fork
+typedef struct s_fork
 {
-	size_t	nb;
+	size_t			nb;
 	pthread_mutex_t	mutex;
 	bool			available;
 }				t_fork;
 
-typedef struct	s_args
+typedef struct s_args
 {
 	size_t	time_eat;
 	size_t	time_die;
@@ -34,7 +34,7 @@ typedef struct	s_args
 	bool	meal_limit;
 }				t_args;
 
-typedef enum	e_loop
+typedef enum e_loop
 {
 	WAIT,
 	LOOP,
@@ -42,7 +42,7 @@ typedef enum	e_loop
 	ERROR,
 }				t_loop;
 
-typedef struct	s_philo
+typedef struct s_philo
 {
 	pthread_t		thread;
 	size_t			nb;
@@ -59,7 +59,7 @@ typedef struct	s_philo
 	t_loop			*loop;
 }				t_philo;
 
-typedef struct	s_monitor
+typedef struct s_monitor
 {
 	size_t			start_time;
 	size_t			nb_philos;
@@ -70,7 +70,7 @@ typedef struct	s_monitor
 	t_loop			loop;
 }				t_monitor;
 
-typedef enum	e_state
+typedef enum e_state
 {
 	EAT,
 	FORK,

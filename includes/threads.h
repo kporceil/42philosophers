@@ -19,7 +19,7 @@ int		starting_threads(t_monitor *data);
 void	update_last_meal(t_philo *philo, size_t time);
 int		monitor_threads(t_monitor *data);
 int		end_thread(t_monitor *data);
-int		check_die(t_philo *philo);
+int		check_die(t_philo *philo, t_monitor *data);
 int		end_loop(t_monitor *data);
 void	*philo_routine(void *args);
 int		philo_eat(t_philo *philo);
