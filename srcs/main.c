@@ -22,11 +22,14 @@ int	main(int argc, char **argv)
 
 	if (argc < 5 || argc > 6)
 	{
-		printf("Wrongs args");
+		printf("Wrongs args.\n");
 		return (1);
 	}
 	if (init_args(argc, argv, &data) != 0)
+	{
+		printf("Wrongs args.\n");
 		return (2);
+	}
 	if (starting_threads(&data) != 0)
 		return (free_ret(data.forks, free_ret(data.philos, 3)));
 	if (monitor_threads(&data) != 0)
