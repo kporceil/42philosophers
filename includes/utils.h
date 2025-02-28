@@ -19,7 +19,7 @@
 int		free_ret(void *ptr, int ret);
 int		free_fork(t_philo *philo, int ret);
 void	update_last_meal(t_philo *philo, size_t time);
-void	take_fork(t_fork *fork);
+bool	take_fork(t_fork *fork);
 bool	check_meal_limit(t_philo *philo);
 void	wait_start(t_philo *philo);
 size_t	ts(size_t epoch);

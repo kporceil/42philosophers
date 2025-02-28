@@ -80,14 +80,18 @@ int	philo_eat(t_philo *philo)
 	fork = philo->l_fork;
 	if (philo->nb % 2)
 		fork = philo->r_fork;
-	while (i++ < 2)
+	while (i < 2)
 	{
-		take_fork(fork);
-		philo->fork_taken[i - 1] = fork;
-		if (secure_print(philo, FORK) != 0)
-			return (free_fork(philo, -1));
-		fork = philo->r_fork;
-		if (philo->nb % 2)
+		if (take_fork(fork) == true)
+		{
+			philo->fork_taken[i] = fork;
+			++i;
+			if (secure_print(philo, FORK) != 0)
+				return (free_fork(philo, -1));
+		}
+		if (fork == philo->l_fork)
+			fork = philo->r_fork;
+		else
 			fork = philo->l_fork;
 		if (philo->l_fork == philo->r_fork)
 			return (-1);
@@ -120,7 +124,7 @@ int	monitor_threads(t_monitor *data)
 		}
 		if (count >= data->nb_philos)
 			return (end_loop(data));
-		usleep(1000);
+		usleep(1500);
 	}
 }
 
