@@ -52,7 +52,7 @@ void	*philo_routine(void *args)
 	if (secure_print(philo, THINK) != 0)
 		return (NULL);
 	if (philo->nb % 2)
-		usleep((philo->args.time_eat * 1000) >> 1);
+		ft_usleep((philo->args.time_eat * 1000) >> 1);
 	while (1)
 	{
 		if (philo_eat(philo) != 0)
@@ -60,11 +60,11 @@ void	*philo_routine(void *args)
 		update_last_meal(philo, ft_gettimeofday());
 		if (secure_print(philo, EAT) != 0)
 			return (free_fork(philo, 0), NULL);
-		usleep(philo->args.time_eat * 1000);
+		ft_usleep(philo->args.time_eat * 1000);
 		(void)free_fork(philo, 0);
 		if (secure_print(philo, SLEEP) != 0)
 			return (NULL);
-		usleep(philo->args.time_sleep * 1000);
+		ft_usleep(philo->args.time_sleep * 1000);
 		if (secure_print(philo, THINK) != 0)
 			return (NULL);
 	}
