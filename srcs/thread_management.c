@@ -57,9 +57,9 @@ void	*philo_routine(void *args)
 	{
 		if (philo_eat(philo) != 0)
 			return (NULL);
+		update_last_meal(philo, ft_gettimeofday());
 		if (secure_print(philo, EAT) != 0)
 			return (free_fork(philo, 0), NULL);
-		update_last_meal(philo, ft_gettimeofday());
 		usleep(philo->args.time_eat * 1000);
 		(void)free_fork(philo, 0);
 		if (secure_print(philo, SLEEP) != 0)
@@ -120,7 +120,7 @@ int	monitor_threads(t_monitor *data)
 		}
 		if (count >= data->nb_philos)
 			return (end_loop(data));
-		usleep((data->args.time_die >> 2) * 1000);
+		usleep(1000);
 	}
 }
 

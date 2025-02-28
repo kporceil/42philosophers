@@ -13,9 +13,11 @@
 #include "threads.h"
 #include "philo_data.h"
 #include "utils.h"
-#include <pthread.h>
-
+#include <bits/types/struct_timeval.h>
+#include <sys/time.h>
+#include <unistd.h>
 #include <stdio.h>
+#include <pthread.h>
 
 int	check_die(t_philo *philo, t_monitor *data)
 {

@@ -49,7 +49,7 @@ void	take_fork(t_fork *fork)
 	while (fork->available == false)
 	{
 		pthread_mutex_unlock(&fork->mutex);
-		usleep(750);
+		usleep(1000);
 		pthread_mutex_lock(&fork->mutex);
 	}
 	fork->available = false;

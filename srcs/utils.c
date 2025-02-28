@@ -18,7 +18,6 @@
 #include <stdio.h>
 #include <stdbool.h>
 #include <unistd.h>
-#include "philo_data.h"
 #include "utils.h"
 
 static int	ft_isspace(int c)
