@@ -25,7 +25,7 @@ void	wait_start(t_philo *philo);
 size_t	ts(size_t epoch);
 int		ft_atoul(const char *nptr, size_t *nb);
 size_t	ft_gettimeofday(void);
-int		secure_print(t_philo *philo, t_state mod);
+int		secure_print(t_philo *philo, t_state mod, size_t time);
 void	pthread_mutex_unlock_lock(pthread_mutex_t *mtx);
 void	ft_usleep(size_t usec);
 

@@ -8,7 +8,8 @@ override OBJDIR := $(addprefix $(BUILDDIR), objs/)
 
 override DEPDIR := $(addprefix $(BUILDDIR), deps/)
 
-BASENAME := main parsing utils thread_management threads_utils eat_utils
+BASENAME := main parsing utils thread_management threads_utils eat_utils \
+			monitoring_utils
 
 override SRCS := $(addprefix $(SRCDIR), $(addsuffix .c, $(BASENAME)))
 

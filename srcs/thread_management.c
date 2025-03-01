@@ -49,7 +49,7 @@ void	*philo_routine(void *args)
 
 	philo = args;
 	wait_start(philo);
-	if (secure_print(philo, THINK) != 0)
+	if (secure_print(philo, THINK, ts(*philo->start_time)) != 0)
 		return (NULL);
 	if (philo->nb % 2)
 		ft_usleep((philo->args.time_eat * 1000) >> 1);
@@ -58,14 +58,14 @@ void	*philo_routine(void *args)
 		if (philo_eat(philo) != 0)
 			return (NULL);
 		update_last_meal(philo, ft_gettimeofday());
-		if (secure_print(philo, EAT) != 0)
+		if (secure_print(philo, EAT, ts(*philo->start_time)) != 0)
 			return (free_fork(philo, 0), NULL);
 		ft_usleep(philo->args.time_eat * 1000);
 		(void)free_fork(philo, 0);
-		if (secure_print(philo, SLEEP) != 0)
+		if (secure_print(philo, SLEEP, ts(*philo->start_time)) != 0)
 			return (NULL);
 		ft_usleep(philo->args.time_sleep * 1000);
-		if (secure_print(philo, THINK) != 0)
+		if (secure_print(philo, THINK, ts(*philo->start_time)) != 0)
 			return (NULL);
 	}
 	return (NULL);
@@ -86,7 +86,7 @@ int	philo_eat(t_philo *philo)
 		{
 			philo->fork_taken[i] = fork;
 			++i;
-			if (secure_print(philo, FORK) != 0)
+			if (secure_print(philo, FORK, ts(*philo->start_time)) != 0)
 				return (free_fork(philo, -1));
 		}
 		if (fork == philo->l_fork)
@@ -95,6 +95,7 @@ int	philo_eat(t_philo *philo)
 			fork = philo->l_fork;
 		if (philo->l_fork == philo->r_fork)
 			return (-1);
+		usleep(100);
 	}
 	return (0);
 }
